@@ -1,6 +1,4 @@
-import { isNode } from 'browser-or-node'
-import base64url from 'base64url'
-import { encode } from 'base64-arraybuffer'
+import { getRandomString, createHash } from './util'
 
 interface EveSSOPCKEAuthConfig {
   method: 'pkce'
@@ -14,18 +12,6 @@ export function createSSO (config: EveSSOPCKEAuthConfig): EveSSOAuth {
 
 const BASE_URI = 'https://login.eveonline.com/'
 const AUTHORIZE_PATH = '/v2/oauth/authorize'
-
-async function getRandomString (length: number): Promise<string> {
-  const numBytes = Math.floor(length / 2)
-  if (isNode === true) {
-    const { randomBytes } = await import('crypto')
-    return randomBytes(numBytes).toString('hex')
-  } else {
-    const array = new Uint8Array(numBytes)
-    window.crypto.getRandomValues(array)
-    return ([...array].map(x => x.toString(16).padStart(2, '0')).join(''))
-  }
-}
 
 class EveSSOAuth {
   protected config: EveSSOPCKEAuthConfig
@@ -44,14 +30,7 @@ class EveSSOAuth {
   }
 
   async generateCodeChallenge (codeVerifier: string): Promise<string> {
-    if (isNode === true) {
-      const { createHash } = await import('crypto')
-      return base64url.fromBase64(createHash('sha256').update(codeVerifier).digest('base64'))
-    } else {
-      const data = new TextEncoder().encode(codeVerifier)
-      const digest = await window.crypto.subtle.digest('SHA-256', data)
-      return base64url.fromBase64(encode(digest))
-    }
+    return await createHash(codeVerifier)
   }
 
   async getUri (scope: string[] = []): Promise<string> {
