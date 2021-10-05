@@ -6,18 +6,27 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha -r ts-node/register src/**/*.test.ts",
-    "test:browser": "mocha-vite-puppeteer"
+    "test:browser": "mocha-vite-puppeteer",
+    "lint": "ts-standard"
   },
   "devDependencies": {
     "@types/chai": "^4.2.22",
     "@types/mocha": "^9.0.0",
+    "@types/node": "^16.10.2",
     "chai": "^4.3.4",
     "cross-env": "^7.0.3",
     "mocha": "^9.1.2",
     "mocha-vite-puppeteer": "^1.10.0",
     "ts-node": "^10.2.1",
+    "ts-standard": "^10.0.0",
     "typescript": "^4.3.2",
     "vite": "^2.6.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "ts-standard": {
+    "ignore": [
+      "dist",
+      "src/**/*.js"
+    ]
+  }
 }
