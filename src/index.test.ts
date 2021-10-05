@@ -30,6 +30,16 @@ describe('getUri', () => {
     expect(url.pathname).to.equal('/v2/oauth/authorize')
   })
 
-  it('it sets the right paramaters')
+  it('it sets the right paramaters', async () => {
+    const uri = await auth.getUri(scopes)
+    const url = new URL(uri)
+
+    expect(url.searchParams.get('response_type')).to.equal('code')
+    expect(url.searchParams.get('redirect_uri')).to.equal(REDIRECT_URI)
+    expect(url.searchParams.get('client_id')).to.equal(CLIENT_ID)
+    expect(url.searchParams.get('scope')).to.equal(scopes.join(' '))
+    expect(url.searchParams.get('state')).to.have.lengthOf(8)
+  })
+
   it('it creates the right code_challenge')
 })
