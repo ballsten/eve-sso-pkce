@@ -53,3 +53,34 @@ describe('getUri', () => {
     expect(url.searchParams.get('code_challenge_method')).to.equal('S256')
   })
 })
+
+describe('getAuthToken', () => {
+  /*
+  var auth: EveSSOAuth
+
+  beforeEach(() => {
+    auth = createSSO({
+      method: 'pkce',
+      clientId: CLIENT_ID,
+      redirectUri: REDIRECT_URI
+    })
+  })
+  */
+
+  it('it requests the url', async () => {
+    /*
+    const uri = await auth.getUri()
+    const state = new URL(uri).searchParams.get('state')
+
+    auth.getAuthToken(state!, 'abcdef123456789')
+
+    expect(mockedAxios.post).to.equalCalled()
+
+    const url = new URL(mockedAxios.post.mock.calls[0][0])
+
+    expect(url.protocol).to.equal('https:')
+    expect(url.host).to.equal('login.eveonline.com')
+    expect(url.pathname).to.equal('/v2/oauth/token')
+    */
+  })
+})
