@@ -65,3 +65,5 @@ class EveSSOAuth {
     return url.toString()
   }
 }
+
+export type { EveSSOAuth }

@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha -r ts-node/register src/**/*.test.ts",
+    "test": "yarn test:node && yarn test:browser",
+    "test:node": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha -r ts-node/register src/**/*.test.ts",
     "test:browser": "mocha-vite-puppeteer",
     "lint": "ts-standard"
   },
