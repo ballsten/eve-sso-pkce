@@ -1,9 +1,12 @@
-import { createSSO } from '.'
 import { expect } from 'chai'
+import { fake } from 'sinon'
+
+import { createSSO } from '.'
 import type { EveSSOAuth } from '.'
 
 const CLIENT_ID = 'abcdef1234567890abcdef1234567890'
 const REDIRECT_URI = 'http://localhost/callback'
+const CODE_VERIFIER = 'f8tUrW6SUFiuKrhsN5azcptFt1aCm6svGfdrCDEw0='
 
 describe('getUri', () => {
   var auth: EveSSOAuth
@@ -41,5 +44,12 @@ describe('getUri', () => {
     expect(url.searchParams.get('state')).to.have.lengthOf(8)
   })
 
-  it('it creates the right code_challenge')
+  it('it creates the right code_challenge', async () => {
+    auth.generateCodeVerifier = fake(() => { return CODE_VERIFIER })
+    const uri = await auth.getUri(scopes)
+    const url = new URL(uri)
+
+    expect(url.searchParams.get('code_challenge')).to.equal('IUsIJxtFfzTHF5C7Yu7mMqPs7ErAmUfZ1Ol_MtXwOVA')
+    expect(url.searchParams.get('code_challenge_method')).to.equal('S256')
+  })
 })
