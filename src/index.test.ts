@@ -1,4 +1,4 @@
-import { test } from './main'
+import { test } from '.'
 import { expect } from 'chai'
 
 describe("test", () => {
