@@ -1,4 +1,6 @@
 import { isNode } from 'browser-or-node'
+import base64url from 'base64url'
+import { encode } from 'base64-arraybuffer'
 
 interface EveSSOPCKEAuthConfig {
   method: 'pkce'
@@ -42,7 +44,14 @@ class EveSSOAuth {
   }
 
   async generateCodeChallenge (codeVerifier: string): Promise<string> {
-    return `${codeVerifier}-YOLO`
+    if (isNode === true) {
+      const { createHash } = await import('crypto')
+      return base64url.fromBase64(createHash('sha256').update(codeVerifier).digest('base64'))
+    } else {
+      const data = new TextEncoder().encode(codeVerifier)
+      const digest = await window.crypto.subtle.digest('SHA-256', data)
+      return base64url.fromBase64(encode(digest))
+    }
   }
 
   async getUri (scope: string[] = []): Promise<string> {
