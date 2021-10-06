@@ -1,6 +1,7 @@
 {
   "name": "eveonline-sso",
   "version": "0.0.1",
+  "main": "dist/eveonline-sso.es.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
