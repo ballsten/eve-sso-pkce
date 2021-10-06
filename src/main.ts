@@ -20,7 +20,6 @@ export function createAuth () {
   localStorage.setItem('callbackUri', callbackUri.value)
 
   auth = createSSO({
-    method: 'pkce',
     clientId: clientId.value,
     redirectUri: callbackUri.value
   })
