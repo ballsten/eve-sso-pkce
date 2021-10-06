@@ -1,8 +1,14 @@
-import { expect } from 'chai'
-import { fake } from 'sinon'
+/* eslint-disable no-unused-expressions */
+
+import chai from 'chai'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
 
 import { createSSO } from '.'
 import type { EveSSOAuth } from '.'
+
+const expect = chai.expect
+chai.use(sinonChai)
 
 const CLIENT_ID = 'abcdef1234567890abcdef1234567890'
 const REDIRECT_URI = 'http://localhost/callback'
@@ -45,7 +51,7 @@ describe('getUri', () => {
   })
 
   it('it creates the right code_challenge', async () => {
-    auth.generateCodeVerifier = fake(() => { return CODE_VERIFIER })
+    auth.generateCodeVerifier = sinon.fake(() => { return CODE_VERIFIER })
     const uri = await auth.getUri(scopes)
     const url = new URL(uri)
 
@@ -55,32 +61,66 @@ describe('getUri', () => {
 })
 
 describe('getAuthToken', () => {
-  /*
   var auth: EveSSOAuth
+  var accessToken: string
 
-  beforeEach(() => {
+  var fetchToken: any
+
+  before(async () => {
+    const keyResponse = await generateKeyPair('RS256')
+    accessToken = await new SignJWT({ 'urn:test:claim': 'this is a test' })
+      .setProtectedHeader({ alg: 'RS256' })
+      .setIssuedAt()
+      .setIssuer('login.eveonline.com')
+      .setAudience('urn:test:runner')
+      .setSubject('this is a test')
+      .setExpirationTime('2h')
+      .sign(keyResponse.privateKey)
+  })
+
+  beforeEach(async () => {
     auth = createSSO({
       method: 'pkce',
       clientId: CLIENT_ID,
       redirectUri: REDIRECT_URI
     })
+
+    const stateStub = sinon.stub(auth, 'generateState')
+    stateStub.onCall(0).returns(Promise.resolve('12345678'))
+
+    const MOCK_TOKEN = {
+      json: async () => {
+        return {
+          access_token: accessToken,
+          expires_in: 1199,
+          token_type: 'Bearer',
+          refresh_token: '1234567890abcedef'
+        }
+      }
+    }
+
+    const keyResponse = await generateKeyPair('RS256')
+    const publicKey = keyResponse.publicKey
+
+    console.log('publicKey', keyResponse)
+    const keyStub = sinon.stub(auth, 'getPublicKey')
+    keyStub.returns(Promise.resolve(publicKey))
+
+    const fetchStub = sinon.stub(auth, '_fetchToken')
+    fetchStub.returns(Promise.resolve(MOCK_TOKEN) as any)
   })
-  */
 
   it('it requests the url', async () => {
-    /*
-    const uri = await auth.getUri()
-    const state = new URL(uri).searchParams.get('state')
+    await auth.getUri()
 
-    auth.getAuthToken(state!, 'abcdef123456789')
+    await auth.getAuthToken('12345678', 'abcdef123456789')
 
-    expect(mockedAxios.post).to.equalCalled()
+    expect(fetchToken.callCount).to.equal(1)
 
-    const url = new URL(mockedAxios.post.mock.calls[0][0])
+    const url = new URL(fetchToken.args[0][0])
 
     expect(url.protocol).to.equal('https:')
     expect(url.host).to.equal('login.eveonline.com')
     expect(url.pathname).to.equal('/v2/oauth/token')
-    */
   })
 })
