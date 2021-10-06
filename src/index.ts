@@ -3,7 +3,6 @@ import { jwtVerify, KeyLike } from 'jose/jwt/verify'
 import { parseJwk } from 'jose/jwk/parse'
 
 interface EveSSOPCKEAuthConfig {
-  method: 'pkce'
   clientId: string
   redirectUri: string
 }
