@@ -129,13 +129,41 @@ class EveSSOAuth {
     return await fetch(url, init)
   }
 
-  async getAuthToken (code: string, codeVerifier: string): Promise<EveSSOToken> {
+  async getAccessToken (code: string, codeVerifier: string): Promise<EveSSOToken> {
     try {
       const form = new URLSearchParams()
       form.append('grant_type', 'authorization_code')
       form.append('code', code)
       form.append('client_id', this.config.clientId)
       form.append('code_verifier', codeVerifier)
+
+      const url = new URL(TOKEN_PATH, BASE_URI).toString()
+
+      const response = await this._fetchToken(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Host: 'login.eveonline.com'
+        },
+        body: form
+      })
+
+      const token = await this.verifyToken(await response.json())
+
+      return token
+    } catch (error) {
+      console.log('There was an error retreiving the token:', error)
+      throw error
+    }
+  }
+
+  async refreshToken (refreshToken: string, scopes?: string[]): Promise<EveSSOToken> {
+    try {
+      const form = new URLSearchParams()
+      form.append('grant_type', 'refresh_token')
+      form.append('refresh_token', refreshToken)
+      form.append('client_id', this.config.clientId)
+      if (scopes !== undefined) form.append('scope', scopes.join(' '))
 
       const url = new URL(TOKEN_PATH, BASE_URI).toString()
 

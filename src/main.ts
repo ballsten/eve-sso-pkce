@@ -60,7 +60,7 @@ window.addEventListener('load', async () => {
     })
     const cv = localStorage.getItem(url.searchParams.get('state'))
     
-    const token = await auth.getAuthToken(url.searchParams.get('code'), cv)
+    const token = await auth.getAccessToken(url.searchParams.get('code'), cv)
     console.log(token)
   } else {
     config?.classList.remove('hidden')
