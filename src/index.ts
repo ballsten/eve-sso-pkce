@@ -42,6 +42,7 @@ export function createSSO (config: EveSSOPCKEAuthConfig): EveSSOAuth {
 const BASE_URI = 'https://login.eveonline.com/'
 const AUTHORIZE_PATH = '/v2/oauth/authorize'
 const TOKEN_PATH = '/v2/oauth/token'
+const REVOKE_PATH = '/v2/oauth/revoke'
 const JWKS_URL = 'https://login.eveonline.com/oauth/jwks'
 
 class EveSSOAuth {
@@ -181,6 +182,28 @@ class EveSSOAuth {
       return token
     } catch (error) {
       console.log('There was an error retreiving the token:', error)
+      throw error
+    }
+  }
+
+  async revokeRefreshToken (refreshToken: string): Promise<void> {
+    try {
+      const form = new URLSearchParams()
+      form.append('token_type_hint', 'refresh_token')
+      form.append('token', refreshToken)
+      form.append('client_id', this.config.clientId)
+
+      const url = new URL(REVOKE_PATH, BASE_URI).toString()
+
+      await this._fetchToken(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Host: 'login.eveonline.com'
+        }
+      })
+    } catch (error) {
+      console.log(error)
       throw error
     }
   }
