@@ -186,21 +186,24 @@ class EveSSOAuth {
     }
   }
 
-  async revokeRefreshToken (refreshToken: string): Promise<void> {
+  async revokeRefreshToken (token: EveSSOToken): Promise<void> {
     try {
       const form = new URLSearchParams()
       form.append('token_type_hint', 'refresh_token')
-      form.append('token', refreshToken)
+      form.append('token', token.refresh_token)
       form.append('client_id', this.config.clientId)
 
       const url = new URL(REVOKE_PATH, BASE_URI).toString()
 
+      const headers = new Headers()
+
+      headers.set('Content-Type', 'application/x-www-form-urlencoded')
+      headers.set('Host', 'login.eveonline.com')
+
       await this._fetchToken(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Host: 'login.eveonline.com'
-        }
+        headers,
+        body: form
       })
     } catch (error) {
       console.log(error)
