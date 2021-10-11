@@ -5,8 +5,8 @@ module.exports = defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'eveonline-sso',
-      fileName: (format) => `eveonline-sso.${format}.js`
+      name: 'eve-sso-pkce',
+      fileName: (format) => `eve-sso-pkce.${format}.js`
     }
   }
 })
