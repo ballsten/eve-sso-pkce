@@ -80,7 +80,7 @@ class EveSSOAuth {
         const jwks = await this._getJWKKeyData()
         if (jwks !== null) {
           const key = jwks.keys.find((x: any) => x.alg === 'RS256')
-          this.publicKey = await parseJwk(key)
+          this.publicKey = await parseJwk(key) as KeyLike
           return this.publicKey
         } else {
           throw new Error('There was a problem obtaining public key')
