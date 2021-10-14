@@ -9,7 +9,7 @@
     "serve": "vite preview",
     "test": "mocha-vite-puppeteer",
     "lint": "ts-standard",
-    "pack": "vite build"
+    "prepare": "vite build"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.5",
