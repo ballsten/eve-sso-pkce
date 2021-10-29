@@ -2,18 +2,18 @@ import { getRandomString, createHash } from './util'
 import { jwtVerify, KeyLike } from 'jose/jwt/verify'
 import { parseJwk } from 'jose/jwk/parse'
 
-interface EveSSOPCKEAuthConfig {
+export interface EveSSOPCKEAuthConfig {
   clientId: string
   redirectUri: string
 }
 
-interface EveSSOUri {
+export interface EveSSOUri {
   uri: string
   state: string
   codeVerifier: string
 }
 
-interface EveSSOToken {
+export interface EveSSOToken {
   access_token: string
   expires_in: string
   token_type: string
@@ -21,7 +21,7 @@ interface EveSSOToken {
   payload?: EveSSOPayload
 }
 
-interface EveSSOPayload {
+export interface EveSSOPayload {
   jti: string
   kid: string
   sub: string
