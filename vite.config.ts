@@ -23,7 +23,7 @@ module.exports = defineConfig({
       },
       plugins: [
         typescript({
-          'target': 'es2020',
+          'target': 'esnext',
           'rootDir': resolvePath('src'),
           'declaration': true,
           'declarationDir': resolvePath('dist'),
