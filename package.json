@@ -24,7 +24,7 @@
   "dependencies": {
     "base64-arraybuffer": "^1.0.1",
     "base64url": "^3.0.1",
-    "jose": "^3.19.0"
+    "jose": "4"
   },
   "ts-standard": {
     "ignore": [

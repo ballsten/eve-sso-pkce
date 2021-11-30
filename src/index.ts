@@ -1,6 +1,5 @@
 import { getRandomString, createHash } from './util'
-import { jwtVerify, KeyLike } from 'jose/jwt/verify'
-import { parseJwk } from 'jose/jwk/parse'
+import { jwtVerify, importJWK, KeyLike } from 'jose'
 
 export interface EveSSOPCKEAuthConfig {
   clientId: string
@@ -80,7 +79,7 @@ class EveSSOAuth {
         const jwks = await this._getJWKKeyData()
         if (jwks !== null) {
           const key = jwks.keys.find((x: any) => x.alg === 'RS256')
-          this.publicKey = await parseJwk(key) as KeyLike
+          this.publicKey = await importJWK(key) as KeyLike
           return this.publicKey
         } else {
           throw new Error('There was a problem obtaining public key')
