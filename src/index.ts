@@ -6,9 +6,23 @@ export interface EveSSOPCKEAuthConfig {
   redirectUri: string
 }
 
+/**
+ * A URI object for initiating authentication
+ */
 export interface EveSSOUri {
+  /**
+   * the uri to eve auth
+   */
   uri: string
+
+  /**
+   * The generated state string
+   */
   state: string
+
+  /**
+   * The generated code verifer. Must be saved for later use.
+   */
   codeVerifier: string
 }
 
@@ -20,6 +34,9 @@ export interface EveSSOToken {
   payload?: EveSSOPayload
 }
 
+/**
+ * Eve SSO Token
+ */
 export interface EveSSOPayload {
   jti: string
   kid: string
@@ -34,6 +51,16 @@ export interface EveSSOPayload {
   iss: string
 }
 
+/**
+ * Returns an new instance of EveSSOAuth
+ *
+ * @remarks
+ *
+ * This method is the main export of the package. It is used to instatiate the EveSSOAuth class.
+ *
+ * @param config - A config object
+ * @returns A EveSSOAuth object
+ */
 export function createSSO (config: EveSSOPCKEAuthConfig): EveSSOAuth {
   return new EveSSOAuth(config)
 }
@@ -92,6 +119,12 @@ class EveSSOAuth {
     return this.publicKey
   }
 
+  /**
+   * Returns the an EveSSOUri that contains all the details required.
+   *
+   * @param scope - an array of strings for the scopes to request access to.
+   * @returns an EveSSOUri object
+   */
   async getUri (scope: string[] = []): Promise<EveSSOUri> {
     const state = await this.generateState()
     const codeVerifier = await this.generateCodeVerifier()
@@ -129,6 +162,12 @@ class EveSSOAuth {
     return await fetch(url, init)
   }
 
+  /**
+   * Proceses the response from the Oauth server
+   * @param code - code returned from the auth serve
+   * @param codeVerifier - the code verifier generated from {@link EveSSOAuth.getUri | getUri}
+   * @returns A Promise of the EveSSOToken
+   */
   async getAccessToken (code: string, codeVerifier: string): Promise<EveSSOToken> {
     try {
       const form = new URLSearchParams()
@@ -157,6 +196,12 @@ class EveSSOAuth {
     }
   }
 
+  /**
+   * Refresh your OAuth token
+   * @param refreshToken - refresh token returned from {@link }
+   * @param scopes - array of scopes to refresh for (optional)
+   * @returns a Promise of a new EveSSOToken
+   */
   async refreshToken (refreshToken: string, scopes?: string[]): Promise<EveSSOToken> {
     try {
       const form = new URLSearchParams()
@@ -185,6 +230,10 @@ class EveSSOAuth {
     }
   }
 
+  /**
+   * Revoke refresh token
+   * @param token - refresh token that you want to revoke
+   */
   async revokeRefreshToken (token: EveSSOToken): Promise<void> {
     try {
       const form = new URLSearchParams()
