@@ -38,6 +38,7 @@ export interface EveSSOToken {
  * Eve SSO Token
  */
 export interface EveSSOPayload {
+  scp: string
   jti: string
   kid: string
   sub: string
@@ -45,6 +46,7 @@ export interface EveSSOPayload {
   tenant: string
   tier: string
   region: string
+  name: string
   owner: string
   exp: number
   iat: number
@@ -70,8 +72,6 @@ const AUTHORIZE_PATH = '/v2/oauth/authorize'
 const TOKEN_PATH = '/v2/oauth/token'
 const REVOKE_PATH = '/v2/oauth/revoke'
 const JWKS_URL = 'https://login.eveonline.com/oauth/jwks'
-
-
 
 class EveSSOAuth {
   protected config: EveSSOPCKEAuthConfig
