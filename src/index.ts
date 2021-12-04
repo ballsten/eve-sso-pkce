@@ -61,8 +61,8 @@ export interface EveSSOPayload {
  * @param config - A config object
  * @returns A EveSSOAuth object
  */
-export function createSSO (config: EveSSOPCKEAuthConfig): EveSSOAuth {
-  return new EveSSOAuth(config)
+export function createSSO (config: EveSSOPCKEAuthConfig, fetch = window.fetch): EveSSOAuth {
+  return new EveSSOAuth(config, fetch)
 }
 
 const BASE_URI = 'https://login.eveonline.com/'
@@ -71,11 +71,15 @@ const TOKEN_PATH = '/v2/oauth/token'
 const REVOKE_PATH = '/v2/oauth/revoke'
 const JWKS_URL = 'https://login.eveonline.com/oauth/jwks'
 
+
+
 class EveSSOAuth {
   protected config: EveSSOPCKEAuthConfig
   protected publicKey!: KeyLike
+  private readonly fetch
 
-  constructor (config: EveSSOPCKEAuthConfig) {
+  constructor (config: EveSSOPCKEAuthConfig, fetch = window.fetch) {
+    this.fetch = fetch
     this.config = config
   }
 
@@ -159,7 +163,7 @@ class EveSSOAuth {
   }
 
   async _fetchToken (url: string, init: object): Promise<Response> {
-    return await fetch(url, init)
+    return await this.fetch(url, init)
   }
 
   /**
