@@ -155,9 +155,8 @@ describe('>> revokeRefreshToken', () => {
     mockJSON.mockResolvedValueOnce({
       access_token: ''
     })
-    const token = mockToken()
     
-    await auth.revokeRefreshToken(token)
+    await auth.revokeRefreshToken('refresh-token')
 
     expect(mockFetch).toBeCalled()
     const url = new URL(mockFetch.mock.calls[ 0 ][ 0 ])
@@ -167,6 +166,6 @@ describe('>> revokeRefreshToken', () => {
     const config = mockFetch.mock.calls[ 0 ][ 1 ]
     expect(config.method).toBe('POST')
     expect(config.body.get('token_type_hint')).toBe('refresh_token')
-    expect(config.body.get('token')).toBe(token.refresh_token)
+    expect(config.body.get('token')).toBe('refresh-token')
   })
 })

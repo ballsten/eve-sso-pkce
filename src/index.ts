@@ -202,7 +202,7 @@ class EveSSOAuth {
 
   /**
    * Refresh your OAuth token
-   * @param refreshToken - refresh token returned from {@link }
+   * @param refreshToken - refresh token to use
    * @param scopes - array of scopes to refresh for (optional)
    * @returns a Promise of a new EveSSOToken
    */
@@ -236,13 +236,13 @@ class EveSSOAuth {
 
   /**
    * Revoke refresh token
-   * @param token - refresh token that you want to revoke
+   * @param refreshToken - refresh token that you want to revoke
    */
-  async revokeRefreshToken (token: EveSSOToken): Promise<void> {
+  async revokeRefreshToken (refreshToken: string): Promise<void> {
     try {
       const form = new URLSearchParams()
       form.append('token_type_hint', 'refresh_token')
-      form.append('token', token.refresh_token)
+      form.append('token', refreshToken)
       form.append('client_id', this.config.clientId)
 
       const url = new URL(REVOKE_PATH, BASE_URI).toString()
