@@ -1,126 +1,171 @@
-/* eslint-disable no-unused-expressions */
-
-import chai from 'chai'
-import sinon from 'sinon'
-import sinonChai from 'sinon-chai'
-
-import { createSSO } from '.'
-import type { EveSSOAuth } from '.'
-
-const expect = chai.expect
-chai.use(sinonChai)
+import { createSSO, EveSSOAuth, EveSSOToken } from '.'
 
 const CLIENT_ID = 'abcdef1234567890abcdef1234567890'
 const REDIRECT_URI = 'http://localhost/callback'
 const CODE_VERIFIER = 'f8tUrW6SUFiuKrhsN5azcptFt1aCm6svGfdrCDEw0='
 
-describe('getUri', () => {
-  var auth: EveSSOAuth
+var auth: EveSSOAuth
 
-  const scopes = [
-    'scope-1',
-    'scope-2'
-  ]
+// mocks
+const mockJSON = jest.fn()
+const mockFetch = jest.fn().mockResolvedValue({
+  json: mockJSON
+})
 
-  beforeEach(() => {
-    auth = createSSO({
-      method: 'pkce',
-      clientId: CLIENT_ID,
-      redirectUri: REDIRECT_URI
-    })
-  })
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
+const currentTime = Math.trunc(new Date().getTime() / 1000)
+export const mockToken = (): EveSSOToken => ({
+  access_token: '1234567890abcdef',
+  expires_in: '1199',
+  token_type: 'Bearer',
+  refresh_token: 'abcdefgh',
+  payload: {
+    scp: 'scope.1',
+    jti: 'abfsdahjkdsf',
+    kid: 'JWT-Signature-Key',
+    sub: 'CHARACTER:EVE:1111111111',
+    azp: '11288rfgsdfg634534534f349d654b560',
+    tenant: 'tranquility',
+    tier: 'live',
+    region: 'world',
+    name: 'Caldari Navy Issue Citizen',
+    owner: 'jhdf9asd0fj0ds9j',
+    exp: currentTime + 1199,
+    iat: currentTime,
+    iss: 'unit.test'
+  }
+})
+
+const scopes = [
+  'scope-1',
+  'scope-2'
+]
+
+beforeEach(() => {
+  auth = createSSO({
+    clientId: CLIENT_ID,
+    redirectUri: REDIRECT_URI
+  }, mockFetch)
+})
+
+describe('>> getUri', () => {
   it('it will generate correct Uri', async () => {
-    const uri = await auth.getUri(scopes)
+    const { uri } = await auth.getUri(scopes)
     const url = new URL(uri)
 
-    expect(url.protocol).to.equal('https:')
-    expect(url.host).to.equal('login.eveonline.com')
-    expect(url.pathname).to.equal('/v2/oauth/authorize')
+    expect(url.protocol).toBe('https:')
+    expect(url.host).toBe('login.eveonline.com')
+    expect(url.pathname).toBe('/v2/oauth/authorize')
   })
 
   it('it sets the right paramaters', async () => {
-    const uri = await auth.getUri(scopes)
+    const { uri } = await auth.getUri(scopes)
     const url = new URL(uri)
 
-    expect(url.searchParams.get('response_type')).to.equal('code')
-    expect(url.searchParams.get('redirect_uri')).to.equal(REDIRECT_URI)
-    expect(url.searchParams.get('client_id')).to.equal(CLIENT_ID)
-    expect(url.searchParams.get('scope')).to.equal(scopes.join(' '))
-    expect(url.searchParams.get('state')).to.have.lengthOf(8)
+    expect(url.searchParams.get('response_type')).toBe('code')
+    expect(url.searchParams.get('redirect_uri')).toBe(REDIRECT_URI)
+    expect(url.searchParams.get('client_id')).toBe(CLIENT_ID)
+    expect(url.searchParams.get('scope')).toBe(scopes.join(' '))
+    expect(url.searchParams.get('state')).toHaveLength(8)
   })
 
   it('it creates the right code_challenge', async () => {
-    auth.generateCodeVerifier = sinon.fake(() => { return CODE_VERIFIER })
-    const uri = await auth.getUri(scopes)
+    auth.generateCodeVerifier = jest.fn(() => { return Promise.resolve(CODE_VERIFIER) })
+    const { uri } = await auth.getUri(scopes)
     const url = new URL(uri)
 
-    expect(url.searchParams.get('code_challenge')).to.equal('IUsIJxtFfzTHF5C7Yu7mMqPs7ErAmUfZ1Ol_MtXwOVA')
-    expect(url.searchParams.get('code_challenge_method')).to.equal('S256')
+    expect(url.searchParams.get('code_challenge')).toBe('IUsIJxtFfzTHF5C7Yu7mMqPs7ErAmUfZ1Ol_MtXwOVA')
+    expect(url.searchParams.get('code_challenge_method')).toBe('S256')
   })
 })
 
-describe('getAuthToken', () => {
-  var auth: EveSSOAuth
-  var accessToken: string
-
-  var fetchToken: any
-
-  before(async () => {
-    const keyResponse = await generateKeyPair('RS256')
-    accessToken = await new SignJWT({ 'urn:test:claim': 'this is a test' })
-      .setProtectedHeader({ alg: 'RS256' })
-      .setIssuedAt()
-      .setIssuer('login.eveonline.com')
-      .setAudience('urn:test:runner')
-      .setSubject('this is a test')
-      .setExpirationTime('2h')
-      .sign(keyResponse.privateKey)
-  })
-
-  beforeEach(async () => {
-    auth = createSSO({
-      method: 'pkce',
-      clientId: CLIENT_ID,
-      redirectUri: REDIRECT_URI
-    })
-
-    const stateStub = sinon.stub(auth, 'generateState')
-    stateStub.onCall(0).returns(Promise.resolve('12345678'))
-
-    const MOCK_TOKEN = {
-      json: async () => {
-        return {
-          access_token: accessToken,
-          expires_in: 1199,
-          token_type: 'Bearer',
-          refresh_token: '1234567890abcedef'
-        }
-      }
-    }
-
-    const keyResponse = await generateKeyPair('RS256')
-    const publicKey = keyResponse.publicKey
-
-    console.log('publicKey', keyResponse)
-    const keyStub = sinon.stub(auth, 'getPublicKey')
-    keyStub.returns(Promise.resolve(publicKey))
-
-    const fetchStub = sinon.stub(auth, '_fetchToken')
-    fetchStub.returns(Promise.resolve(MOCK_TOKEN) as any)
-  })
-
+describe('>> getAccessToken', () => {
   it('it requests the url', async () => {
-    await auth.getUri()
+    mockJSON.mockResolvedValueOnce({
+      access_token: ''
+    })
+    const token = mockToken()
+    auth.verifyToken = jest.fn().mockResolvedValue(token)
 
-    await auth.getAuthToken('12345678', 'abcdef123456789')
+    await auth.getAccessToken('test-code', 'codeVerifier')
+    expect(mockFetch).toBeCalled()
+    const url = new URL(mockFetch.mock.calls[ 0 ][ 0 ])
+    expect(url.host).toBe('login.eveonline.com')
+    expect(url.pathname).toBe('/v2/oauth/token')
 
-    expect(fetchToken.callCount).to.equal(1)
+    const config = mockFetch.mock.calls[ 0 ][ 1 ]
+    expect(config.method).toBe('POST')
+    expect(config.body.get('grant_type')).toBe('authorization_code')
+    expect(config.body.get('code')).toBe('test-code')
+    expect(config.body.get('code_verifier')).toBe('codeVerifier')
+    expect(config.body.get('client_id')).toBe(CLIENT_ID)
 
-    const url = new URL(fetchToken.args[0][0])
+  })
 
-    expect(url.protocol).to.equal('https:')
-    expect(url.host).to.equal('login.eveonline.com')
-    expect(url.pathname).to.equal('/v2/oauth/token')
+  it('returns the token', async () => {
+    mockJSON.mockResolvedValueOnce({
+      access_token: ''
+    })
+    const token = mockToken()
+    auth.verifyToken = jest.fn().mockResolvedValue(token)
+
+    const result = await auth.getAccessToken('test-code', 'codeVerifier')
+    expect(result).toStrictEqual(token)
+  })
+})
+
+describe('>> refreshToken', () => {
+  it('requests the right url', async () => {
+    mockJSON.mockResolvedValueOnce({
+      access_token: ''
+    })
+    const token = mockToken()
+    auth.verifyToken = jest.fn().mockResolvedValue(token)
+    
+    await auth.refreshToken('test-refresh')
+
+    expect(mockFetch).toBeCalled()
+    const url = new URL(mockFetch.mock.calls[ 0 ][ 0 ])
+    expect(url.host).toBe('login.eveonline.com')
+    expect(url.pathname).toBe('/v2/oauth/token')
+
+    const config = mockFetch.mock.calls[ 0 ][ 1 ]
+    expect(config.method).toBe('POST')
+    expect(config.body.get('grant_type')).toBe('refresh_token')
+    expect(config.body.get('refresh_token')).toBe('test-refresh')
+  })
+
+  it('returns the token', async () => {
+    mockJSON.mockResolvedValueOnce({
+      access_token: ''
+    })
+    const token = mockToken()
+    auth.verifyToken = jest.fn().mockResolvedValue(token)
+    
+    const result = await auth.getAccessToken('test-code', 'codeVerifier')
+    expect(result).toStrictEqual(token)
+  })
+})
+
+describe('>> revokeRefreshToken', () => {
+  it('requests the right url', async () => {
+    mockJSON.mockResolvedValueOnce({
+      access_token: ''
+    })
+    
+    await auth.revokeRefreshToken('refresh-token')
+
+    expect(mockFetch).toBeCalled()
+    const url = new URL(mockFetch.mock.calls[ 0 ][ 0 ])
+    expect(url.host).toBe('login.eveonline.com')
+    expect(url.pathname).toBe('/v2/oauth/revoke')
+
+    const config = mockFetch.mock.calls[ 0 ][ 1 ]
+    expect(config.method).toBe('POST')
+    expect(config.body.get('token_type_hint')).toBe('refresh_token')
+    expect(config.body.get('token')).toBe('refresh-token')
   })
 })
