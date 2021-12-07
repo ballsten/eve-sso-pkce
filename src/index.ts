@@ -79,6 +79,7 @@ class EveSSOAuth {
   private readonly fetch: typeof window.fetch
 
   constructor (config: EveSSOPCKEAuthConfig, fetch: any = undefined) {
+    console.log('this is fetch:', fetch)
     if (fetch === undefined) {
       console.log('test')
       this.fetch = window.fetch.bind(window)
