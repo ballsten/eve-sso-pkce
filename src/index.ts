@@ -78,14 +78,8 @@ class EveSSOAuth {
   protected publicKey!: KeyLike
   private readonly fetch: typeof window.fetch
 
-  constructor (config: EveSSOPCKEAuthConfig, fetchParam: any = undefined) {
-    console.log('this is fetch:', fetchParam)
-    if (fetchParam === undefined) {
-      console.log('test')
-      this.fetch = window.fetch.bind(window)
-    } else {
-      this.fetch = fetchParam
-    }
+  constructor (config: EveSSOPCKEAuthConfig, fetchParam = window.fetch) {
+    this.fetch = fetchParam.bind(window)
 
     this.config = config
   }
