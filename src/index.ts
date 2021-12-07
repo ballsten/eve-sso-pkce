@@ -76,10 +76,11 @@ const JWKS_URL = 'https://login.eveonline.com/oauth/jwks'
 class EveSSOAuth {
   protected config: EveSSOPCKEAuthConfig
   protected publicKey!: KeyLike
-  private readonly fetch: any
+  private readonly fetch: typeof window.fetch
 
   constructor (config: EveSSOPCKEAuthConfig, fetch: any = undefined) {
     if (fetch === undefined) {
+      console.log('test')
       this.fetch = window.fetch.bind(window)
     } else {
       this.fetch = fetch
