@@ -80,6 +80,7 @@ class EveSSOAuth {
 
   constructor (config: EveSSOPCKEAuthConfig, fetch = window.fetch) {
     this.fetch = fetch
+    this.fetch.bind(window)
     this.config = config
   }
 
