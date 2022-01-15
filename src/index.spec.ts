@@ -73,7 +73,7 @@ describe('>> getUri', () => {
   })
 
   it('it creates the right code_challenge', async () => {
-    auth.generateCodeVerifier = jest.fn(() => { return Promise.resolve(CODE_VERIFIER) })
+    auth.generateCodeVerifier = jest.fn(async () => { return await Promise.resolve(CODE_VERIFIER) })
     const { uri } = await auth.getUri(scopes)
     const url = new URL(uri)
 
@@ -92,17 +92,16 @@ describe('>> getAccessToken', () => {
 
     await auth.getAccessToken('test-code', 'codeVerifier')
     expect(mockFetch).toBeCalled()
-    const url = new URL(mockFetch.mock.calls[ 0 ][ 0 ])
+    const url = new URL(mockFetch.mock.calls[0][0])
     expect(url.host).toBe('login.eveonline.com')
     expect(url.pathname).toBe('/v2/oauth/token')
 
-    const config = mockFetch.mock.calls[ 0 ][ 1 ]
+    const config = mockFetch.mock.calls[0][1]
     expect(config.method).toBe('POST')
     expect(config.body.get('grant_type')).toBe('authorization_code')
     expect(config.body.get('code')).toBe('test-code')
     expect(config.body.get('code_verifier')).toBe('codeVerifier')
     expect(config.body.get('client_id')).toBe(CLIENT_ID)
-
   })
 
   it('returns the token', async () => {
@@ -124,15 +123,15 @@ describe('>> refreshToken', () => {
     })
     const token = mockToken()
     auth.verifyToken = jest.fn().mockResolvedValue(token)
-    
+
     await auth.refreshToken('test-refresh')
 
     expect(mockFetch).toBeCalled()
-    const url = new URL(mockFetch.mock.calls[ 0 ][ 0 ])
+    const url = new URL(mockFetch.mock.calls[0][0])
     expect(url.host).toBe('login.eveonline.com')
     expect(url.pathname).toBe('/v2/oauth/token')
 
-    const config = mockFetch.mock.calls[ 0 ][ 1 ]
+    const config = mockFetch.mock.calls[0][1]
     expect(config.method).toBe('POST')
     expect(config.body.get('grant_type')).toBe('refresh_token')
     expect(config.body.get('refresh_token')).toBe('test-refresh')
@@ -144,7 +143,7 @@ describe('>> refreshToken', () => {
     })
     const token = mockToken()
     auth.verifyToken = jest.fn().mockResolvedValue(token)
-    
+
     const result = await auth.getAccessToken('test-code', 'codeVerifier')
     expect(result).toStrictEqual(token)
   })
@@ -155,15 +154,15 @@ describe('>> revokeRefreshToken', () => {
     mockJSON.mockResolvedValueOnce({
       access_token: ''
     })
-    
+
     await auth.revokeRefreshToken('refresh-token')
 
     expect(mockFetch).toBeCalled()
-    const url = new URL(mockFetch.mock.calls[ 0 ][ 0 ])
+    const url = new URL(mockFetch.mock.calls[0][0])
     expect(url.host).toBe('login.eveonline.com')
     expect(url.pathname).toBe('/v2/oauth/revoke')
 
-    const config = mockFetch.mock.calls[ 0 ][ 1 ]
+    const config = mockFetch.mock.calls[0][1]
     expect(config.method).toBe('POST')
     expect(config.body.get('token_type_hint')).toBe('refresh_token')
     expect(config.body.get('token')).toBe('refresh-token')
