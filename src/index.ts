@@ -1,8 +1,17 @@
 import { getRandomString, createHash } from './util'
 import { jwtVerify, importJWK, KeyLike } from 'jose'
 
+/**
+ * Config object for creating the EveSSOAuth instance
+ */
 export interface EveSSOPCKEAuthConfig {
+  /**
+   * This is the clientID that is created in the EVE Developers portal
+   */
   clientId: string
+  /**
+   * This is the redirect Uri that you specified in the EVE Developers portal.
+   */
   redirectUri: string
 }
 
@@ -11,7 +20,7 @@ export interface EveSSOPCKEAuthConfig {
  */
 export interface EveSSOUri {
   /**
-   * the uri to eve auth
+   * the uri to eve auth that the client must be redirected to
    */
   uri: string
 
@@ -26,16 +35,42 @@ export interface EveSSOUri {
   codeVerifier: string
 }
 
+/**
+ * This is the object returned from a successful authentication
+ */
 export interface EveSSOToken {
+  /**
+   * the access token for use with the ESI API
+   */
   access_token: string
-  expires_in: string
+
+  /**
+   * the number of seconds until the access token expires
+   */
+  expires_in: string 
+
+  /**
+   * This will aways be 'Bearer'
+   */
   token_type: string
+
+  /**
+   * The refresh token is required to get a new access token after it has expired
+   */
   refresh_token: string
+
+  /**
+   * Decoded access token. Useful for understanding what the token gives you access
+   * to.
+   */
   payload?: EveSSOPayload
 }
 
 /**
  * Eve SSO Token
+ * 
+ * You can probably find out more about what these values are by reading
+ * the ESI docs
  */
 export interface EveSSOPayload {
   scp: string
@@ -58,21 +93,30 @@ export interface EveSSOPayload {
  *
  * @remarks
  *
- * This method is the main export of the package. It is used to instatiate the EveSSOAuth class.
+ * This function is the main export of the package. It is used to instatiate the EveSSOAuth class.
  *
  * @param config - A config object
+ * @param fetch - Dependency injection for fetch, do not use unless you know what you are doing
  * @returns A EveSSOAuth object
  */
 export function createSSO (config: EveSSOPCKEAuthConfig, fetch = window.fetch): EveSSOAuth {
   return new EveSSOAuth(config, fetch)
 }
 
+// EVE SSO endpoints
 const BASE_URI = 'https://login.eveonline.com/'
 const AUTHORIZE_PATH = '/v2/oauth/authorize'
 const TOKEN_PATH = '/v2/oauth/token'
 const REVOKE_PATH = '/v2/oauth/revoke'
 const JWKS_URL = 'https://login.eveonline.com/oauth/jwks'
 
+/**
+ * EveSSOAuth provides an interface for all SSO operations
+ * 
+ * @remarks
+ * 
+ * This class should be created using the createSSO function
+ */
 class EveSSOAuth {
   protected config: EveSSOPCKEAuthConfig
   protected publicKey!: KeyLike
@@ -84,18 +128,22 @@ class EveSSOAuth {
     this.config = config
   }
 
+  // internal method for generating a random state string
   async generateState (): Promise<string> {
     return await getRandomString(8)
   }
 
+  // internal method for generating a code verifier
   async generateCodeVerifier (): Promise<string> {
     return await getRandomString(64)
   }
 
+  // internal method for generating the code challenge
   async generateCodeChallenge (codeVerifier: string): Promise<string> {
     return await createHash(codeVerifier)
   }
 
+  // internal method that gets the JWK Key Data from ESI
   async _getJWKKeyData (): Promise<any> {
     try {
       const response = await fetch(JWKS_URL)
@@ -105,6 +153,7 @@ class EveSSOAuth {
     }
   }
 
+  // internal method for extracting the public key from JWK Key Data
   async getPublicKey (): Promise<KeyLike> {
     if (this.publicKey === undefined) {
       try {
@@ -125,7 +174,11 @@ class EveSSOAuth {
   }
 
   /**
-   * Returns the an EveSSOUri that contains all the details required.
+   * Returns the an EveSSOUri that contains all the details required to progress
+   * with Authentication. The returned object should be retained for use in the 
+   * next steps.
+   * 
+   * The client should be redirected to the EveSSOUri.uri
    *
    * @param scope - an array of strings for the scopes to request access to.
    * @returns an EveSSOUri object
@@ -152,6 +205,8 @@ class EveSSOAuth {
     }
   }
 
+  // internal method for verifying the token. This method sets the payload if 
+  // verification is successful
   async verifyToken (token: EveSSOToken): Promise<EveSSOToken> {
     const publicKey = await this.getPublicKey()
     const { payload } = await jwtVerify(token.access_token, publicKey, {
@@ -163,12 +218,19 @@ class EveSSOAuth {
     return token
   }
 
+  // internal method for fetching the token
   async _fetchToken (url: string, init: object): Promise<Response> {
     return await this.fetch(url, init)
   }
 
   /**
-   * Proceses the response from the Oauth server
+   * This method gets the access token after the user has authenticated. You 
+   * will need to capture the response from the callback URL and extract the
+   * state and code from the query parameters
+   * 
+   * Use the state parameter to retreive the codeVerifier that was returned from
+   * getUri. Pass in the code and codeVerifier into this function
+   * 
    * @param code - code returned from the auth serve
    * @param codeVerifier - the code verifier generated from {@link EveSSOAuth.getUri | getUri}
    * @returns A Promise of the EveSSOToken
