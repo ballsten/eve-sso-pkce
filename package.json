@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "generate-docs": "typedoc --plugin typedoc-plugin-markdown --out docs src/index.ts",
     "serve": "vite preview",
     "test": "jest",
     "lint": "ts-standard",
@@ -14,12 +15,15 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.5",
     "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.8",
     "eslint-import-resolver-node": "^0.3.6",
     "jest": "^27.4.1",
     "jest-environment-jsdom": "^27.4.6",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.2.1",
     "ts-standard": "^11.0.0",
+    "typedoc": "^0.22.10",
+    "typedoc-plugin-markdown": "^3.11.11",
     "typescript": "^4.3.2",
     "vite": "^2.6.0"
   },
