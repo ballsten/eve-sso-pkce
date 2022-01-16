@@ -47,7 +47,7 @@ export interface EveSSOToken {
   /**
    * the number of seconds until the access token expires
    */
-  expires_in: string 
+  expires_in: string
 
   /**
    * This will aways be 'Bearer'
@@ -68,7 +68,7 @@ export interface EveSSOToken {
 
 /**
  * Eve SSO Token
- * 
+ *
  * You can probably find out more about what these values are by reading
  * the ESI docs
  */
@@ -112,9 +112,9 @@ const JWKS_URL = 'https://login.eveonline.com/oauth/jwks'
 
 /**
  * EveSSOAuth provides an interface for all SSO operations
- * 
+ *
  * @remarks
- * 
+ *
  * This class should be created using the createSSO function
  */
 class EveSSOAuth {
@@ -175,9 +175,9 @@ class EveSSOAuth {
 
   /**
    * Returns the an EveSSOUri that contains all the details required to progress
-   * with Authentication. The returned object should be retained for use in the 
+   * with Authentication. The returned object should be retained for use in the
    * next steps.
-   * 
+   *
    * The client should be redirected to the EveSSOUri.uri
    *
    * @param scope - an array of strings for the scopes to request access to.
@@ -205,7 +205,7 @@ class EveSSOAuth {
     }
   }
 
-  // internal method for verifying the token. This method sets the payload if 
+  // internal method for verifying the token. This method sets the payload if
   // verification is successful
   async verifyToken (token: EveSSOToken): Promise<EveSSOToken> {
     const publicKey = await this.getPublicKey()
@@ -224,13 +224,13 @@ class EveSSOAuth {
   }
 
   /**
-   * This method gets the access token after the user has authenticated. You 
+   * This method gets the access token after the user has authenticated. You
    * will need to capture the response from the callback URL and extract the
    * state and code from the query parameters
-   * 
+   *
    * Use the state parameter to retreive the codeVerifier that was returned from
    * getUri. Pass in the code and codeVerifier into this function
-   * 
+   *
    * @param code - code returned from the auth serve
    * @param codeVerifier - the code verifier generated from {@link EveSSOAuth.getUri | getUri}
    * @returns A Promise of the EveSSOToken

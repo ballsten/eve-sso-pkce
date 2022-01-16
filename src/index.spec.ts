@@ -4,7 +4,7 @@ const CLIENT_ID = 'abcdef1234567890abcdef1234567890'
 const REDIRECT_URI = 'http://localhost/callback'
 const CODE_VERIFIER = 'f8tUrW6SUFiuKrhsN5azcptFt1aCm6svGfdrCDEw0='
 
-var auth: EveSSOAuth
+let auth: EveSSOAuth
 
 // mocks
 const mockJSON = jest.fn()
