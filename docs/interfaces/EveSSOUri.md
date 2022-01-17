@@ -22,7 +22,7 @@ The generated code verifer. Must be saved for later use.
 
 #### Defined in
 
-[src/index.ts:35](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L35)
+[src/index.ts:35](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L35)
 
 ___
 
@@ -34,7 +34,7 @@ The generated state string
 
 #### Defined in
 
-[src/index.ts:30](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L30)
+[src/index.ts:30](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L30)
 
 ___
 
@@ -46,4 +46,4 @@ the uri to eve auth that the client must be redirected to
 
 #### Defined in
 
-[src/index.ts:25](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L25)
+[src/index.ts:25](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L25)

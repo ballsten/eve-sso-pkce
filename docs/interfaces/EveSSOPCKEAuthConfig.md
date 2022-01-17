@@ -21,7 +21,7 @@ This is the clientID that is created in the EVE Developers portal
 
 #### Defined in
 
-[src/index.ts:11](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L11)
+[src/index.ts:11](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L11)
 
 ___
 
@@ -33,4 +33,4 @@ This is the redirect Uri that you specified in the EVE Developers portal.
 
 #### Defined in
 
-[src/index.ts:15](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L15)
+[src/index.ts:15](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L15)

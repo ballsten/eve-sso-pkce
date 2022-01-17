@@ -14,25 +14,12 @@ This class should be created using the createSSO function
 
 - [constructor](EveSSOAuth.md#constructor)
 
-### Properties
-
-- [config](EveSSOAuth.md#config)
-- [fetch](EveSSOAuth.md#fetch)
-- [publicKey](EveSSOAuth.md#publickey)
-
 ### Methods
 
-- [\_fetchToken](EveSSOAuth.md#_fetchtoken)
-- [\_getJWKKeyData](EveSSOAuth.md#_getjwkkeydata)
-- [generateCodeChallenge](EveSSOAuth.md#generatecodechallenge)
-- [generateCodeVerifier](EveSSOAuth.md#generatecodeverifier)
-- [generateState](EveSSOAuth.md#generatestate)
 - [getAccessToken](EveSSOAuth.md#getaccesstoken)
-- [getPublicKey](EveSSOAuth.md#getpublickey)
 - [getUri](EveSSOAuth.md#geturi)
 - [refreshToken](EveSSOAuth.md#refreshtoken)
 - [revokeRefreshToken](EveSSOAuth.md#revokerefreshtoken)
-- [verifyToken](EveSSOAuth.md#verifytoken)
 
 ## Constructors
 
@@ -49,122 +36,9 @@ This class should be created using the createSSO function
 
 #### Defined in
 
-[src/index.ts:125](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L125)
-
-## Properties
-
-### config
-
-• `Protected` **config**: [`EveSSOPCKEAuthConfig`](../interfaces/EveSSOPCKEAuthConfig.md)
-
-#### Defined in
-
-[src/index.ts:121](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L121)
-
-___
-
-### fetch
-
-• `Private` `Readonly` **fetch**: (`input`: `RequestInfo`, `init?`: `RequestInit`) => `Promise`<`Response`\> & (`input`: `RequestInfo`, `init?`: `RequestInit`) => `Promise`<`Response`\>
-
-#### Defined in
-
-[src/index.ts:123](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L123)
-
-___
-
-### publicKey
-
-• `Protected` **publicKey**: `KeyLike`
-
-#### Defined in
-
-[src/index.ts:122](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L122)
+[src/index.ts:134](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L134)
 
 ## Methods
-
-### \_fetchToken
-
-▸ **_fetchToken**(`url`, `init`): `Promise`<`Response`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `url` | `string` |
-| `init` | `object` |
-
-#### Returns
-
-`Promise`<`Response`\>
-
-#### Defined in
-
-[src/index.ts:222](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L222)
-
-___
-
-### \_getJWKKeyData
-
-▸ **_getJWKKeyData**(): `Promise`<`any`\>
-
-#### Returns
-
-`Promise`<`any`\>
-
-#### Defined in
-
-[src/index.ts:147](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L147)
-
-___
-
-### generateCodeChallenge
-
-▸ **generateCodeChallenge**(`codeVerifier`): `Promise`<`string`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `codeVerifier` | `string` |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[src/index.ts:142](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L142)
-
-___
-
-### generateCodeVerifier
-
-▸ **generateCodeVerifier**(): `Promise`<`string`\>
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[src/index.ts:137](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L137)
-
-___
-
-### generateState
-
-▸ **generateState**(): `Promise`<`string`\>
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[src/index.ts:132](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L132)
-
-___
 
 ### getAccessToken
 
@@ -192,21 +66,7 @@ A Promise of the EveSSOToken
 
 #### Defined in
 
-[src/index.ts:238](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L238)
-
-___
-
-### getPublicKey
-
-▸ **getPublicKey**(): `Promise`<`KeyLike`\>
-
-#### Returns
-
-`Promise`<`KeyLike`\>
-
-#### Defined in
-
-[src/index.ts:157](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L157)
+[src/index.ts:268](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L268)
 
 ___
 
@@ -234,7 +94,7 @@ an EveSSOUri object
 
 #### Defined in
 
-[src/index.ts:186](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L186)
+[src/index.ts:210](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L210)
 
 ___
 
@@ -259,7 +119,7 @@ a Promise of a new EveSSOToken
 
 #### Defined in
 
-[src/index.ts:272](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L272)
+[src/index.ts:302](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L302)
 
 ___
 
@@ -281,24 +141,4 @@ Revoke refresh token
 
 #### Defined in
 
-[src/index.ts:304](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L304)
-
-___
-
-### verifyToken
-
-▸ **verifyToken**(`token`): `Promise`<[`EveSSOToken`](../interfaces/EveSSOToken.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `token` | [`EveSSOToken`](../interfaces/EveSSOToken.md) |
-
-#### Returns
-
-`Promise`<[`EveSSOToken`](../interfaces/EveSSOToken.md)\>
-
-#### Defined in
-
-[src/index.ts:210](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L210)
+[src/index.ts:334](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L334)

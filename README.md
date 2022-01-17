@@ -59,5 +59,5 @@ const newToken = await sso.refreshToken(token.refreshToken)
 
 5. revoke the token - best to do when the user logs out
 ```
-sso.### revokeRefreshToken(newToken.refreshToken)
+sso.revokeRefreshToken(newToken.refreshToken)
 ```

@@ -33,7 +33,7 @@ the ESI docs
 
 #### Defined in
 
-[src/index.ts:80](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L80)
+[src/index.ts:80](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L80)
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:86](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L86)
+[src/index.ts:86](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L86)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:87](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L87)
+[src/index.ts:87](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L87)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:88](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L88)
+[src/index.ts:88](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L88)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:77](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L77)
+[src/index.ts:77](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L77)
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:78](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L78)
+[src/index.ts:78](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L78)
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:84](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L84)
+[src/index.ts:84](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L84)
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:85](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L85)
+[src/index.ts:85](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L85)
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:83](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L83)
+[src/index.ts:83](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L83)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:76](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L76)
+[src/index.ts:76](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L76)
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:79](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L79)
+[src/index.ts:79](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L79)
 
 ___
 
@@ -143,7 +143,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:81](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L81)
+[src/index.ts:81](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L81)
 
 ___
 
@@ -153,4 +153,4 @@ ___
 
 #### Defined in
 
-[src/index.ts:82](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L82)
+[src/index.ts:82](https://github.com/ballsten/eve-sso-pkce/blob/64fde31/src/index.ts#L82)

@@ -118,8 +118,17 @@ const JWKS_URL = 'https://login.eveonline.com/oauth/jwks'
  * This class should be created using the createSSO function
  */
 class EveSSOAuth {
+  /**
+   * @hidden
+   */
   protected config: EveSSOPCKEAuthConfig
+  /**
+   * @hidden
+   */
   protected publicKey!: KeyLike
+  /**
+   * @hidden
+   */
   private readonly fetch: typeof window.fetch
 
   constructor (config: EveSSOPCKEAuthConfig, fetchParam = window.fetch) {
@@ -128,22 +137,34 @@ class EveSSOAuth {
     this.config = config
   }
 
-  // internal method for generating a random state string
+  /**
+   * internal method for generating a random state string
+   * @hidden
+   */
   async generateState (): Promise<string> {
     return await getRandomString(8)
   }
 
-  // internal method for generating a code verifier
+  /**
+   * internal method for generating a code verifier
+   * @hidden
+   */
   async generateCodeVerifier (): Promise<string> {
     return await getRandomString(64)
   }
 
-  // internal method for generating the code challenge
+  /**
+   * internal method for generating the code challenge
+   * @hidden
+   */
   async generateCodeChallenge (codeVerifier: string): Promise<string> {
     return await createHash(codeVerifier)
   }
 
-  // internal method that gets the JWK Key Data from ESI
+  /**
+   * internal method that gets the JWK Key Data from ESI
+   * @hidden
+   */ 
   async _getJWKKeyData (): Promise<any> {
     try {
       const response = await fetch(JWKS_URL)
@@ -153,7 +174,10 @@ class EveSSOAuth {
     }
   }
 
-  // internal method for extracting the public key from JWK Key Data
+  /**
+   * internal method for extracting the public key from JWK Key Data
+   * @hidden
+   */
   async getPublicKey (): Promise<KeyLike> {
     if (this.publicKey === undefined) {
       try {
@@ -205,8 +229,11 @@ class EveSSOAuth {
     }
   }
 
-  // internal method for verifying the token. This method sets the payload if
-  // verification is successful
+  /**
+   * internal method for verifying the token. This method sets the payload if
+   * verification is successful
+   * @hidden
+   */
   async verifyToken (token: EveSSOToken): Promise<EveSSOToken> {
     const publicKey = await this.getPublicKey()
     const { payload } = await jwtVerify(token.access_token, publicKey, {
@@ -218,7 +245,10 @@ class EveSSOAuth {
     return token
   }
 
-  // internal method for fetching the token
+  /**
+   * internal method for fetching the token
+   * @hidden
+   */
   async _fetchToken (url: string, init: object): Promise<Response> {
     return await this.fetch(url, init)
   }
