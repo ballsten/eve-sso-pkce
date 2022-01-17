@@ -24,7 +24,7 @@ the access token for use with the ESI API
 
 #### Defined in
 
-[src/index.ts:45](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L45)
+[src/index.ts:45](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L45)
 
 ___
 
@@ -36,7 +36,7 @@ the number of seconds until the access token expires
 
 #### Defined in
 
-[src/index.ts:50](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L50)
+[src/index.ts:50](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L50)
 
 ___
 
@@ -49,7 +49,7 @@ to.
 
 #### Defined in
 
-[src/index.ts:66](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L66)
+[src/index.ts:66](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L66)
 
 ___
 
@@ -61,7 +61,7 @@ The refresh token is required to get a new access token after it has expired
 
 #### Defined in
 
-[src/index.ts:60](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L60)
+[src/index.ts:60](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L60)
 
 ___
 
@@ -73,4 +73,4 @@ This will aways be 'Bearer'
 
 #### Defined in
 
-[src/index.ts:55](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L55)
+[src/index.ts:55](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L55)

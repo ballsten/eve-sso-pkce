@@ -49,7 +49,7 @@ This class should be created using the createSSO function
 
 #### Defined in
 
-[src/index.ts:125](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L125)
+[src/index.ts:125](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L125)
 
 ## Properties
 
@@ -59,7 +59,7 @@ This class should be created using the createSSO function
 
 #### Defined in
 
-[src/index.ts:121](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L121)
+[src/index.ts:121](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L121)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:123](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L123)
+[src/index.ts:123](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L123)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:122](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L122)
+[src/index.ts:122](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L122)
 
 ## Methods
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:222](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L222)
+[src/index.ts:222](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L222)
 
 ___
 
@@ -114,7 +114,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:147](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L147)
+[src/index.ts:147](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L147)
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:142](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L142)
+[src/index.ts:142](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L142)
 
 ___
 
@@ -148,7 +148,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:137](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L137)
+[src/index.ts:137](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L137)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:132](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L132)
+[src/index.ts:132](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L132)
 
 ___
 
@@ -192,7 +192,7 @@ A Promise of the EveSSOToken
 
 #### Defined in
 
-[src/index.ts:238](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L238)
+[src/index.ts:238](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L238)
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 #### Defined in
 
-[src/index.ts:157](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L157)
+[src/index.ts:157](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L157)
 
 ___
 
@@ -234,7 +234,7 @@ an EveSSOUri object
 
 #### Defined in
 
-[src/index.ts:186](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L186)
+[src/index.ts:186](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L186)
 
 ___
 
@@ -259,7 +259,7 @@ a Promise of a new EveSSOToken
 
 #### Defined in
 
-[src/index.ts:272](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L272)
+[src/index.ts:272](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L272)
 
 ___
 
@@ -281,7 +281,7 @@ Revoke refresh token
 
 #### Defined in
 
-[src/index.ts:304](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L304)
+[src/index.ts:304](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L304)
 
 ___
 
@@ -301,4 +301,4 @@ ___
 
 #### Defined in
 
-[src/index.ts:210](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L210)
+[src/index.ts:210](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L210)

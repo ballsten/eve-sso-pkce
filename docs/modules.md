@@ -46,4 +46,4 @@ A EveSSOAuth object
 
 #### Defined in
 
-[src/index.ts:102](https://github.com/ballsten/eve-sso-pkce/blob/9067d91/src/index.ts#L102)
+[src/index.ts:102](https://github.com/ballsten/eve-sso-pkce/blob/ef6b514/src/index.ts#L102)
