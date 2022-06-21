@@ -1,8 +1,9 @@
 {
   "name": "eve-sso-pkce",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/eve-sso-pkce.es.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
