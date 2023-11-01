@@ -237,7 +237,7 @@ class EveSSOAuth {
   async verifyToken (token: EveSSOToken): Promise<EveSSOToken> {
     const publicKey = await this.getPublicKey()
     const { payload } = await jwtVerify(token.access_token, publicKey, {
-      issuer: 'login.eveonline.com'
+      issuer: 'https://login.eveonline.com'
     })
 
     token.payload = payload as unknown as EveSSOPayload
